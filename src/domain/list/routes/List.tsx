@@ -8,7 +8,7 @@ const List: React.FC = () => {
   return (
     <Flex minH="100px" display="flex" justify="center" align="center">
       <VStack>
-        <Heading fontSize="25px" textAlign="left" color="green.800" mb="20px">
+        <Heading fontSize="25px" textAlign="left" color="green.800" my="20px">
           みんなのタンポポ情報
         </Heading>
         <ListCard />
