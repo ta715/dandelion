@@ -9,6 +9,7 @@ import List from "./domain/list/routes/List";
 import DetailPage from "./domain/detail/routes/DetailPage";
 import FormPage1 from "./domain/form/routes/FormPage1";
 import FormPage2 from "./domain/form/routes/FormPage2";
+import ConfirmationPage from "./domain/confirmation/routes/ConfirmationPage";
 
 const App: React.FC = (props: any) => (
   <div className="App">
@@ -21,6 +22,7 @@ const App: React.FC = (props: any) => (
             <Route path="/detail" element={<DetailPage />} />
             <Route path="/form1" element={<FormPage1 />} />
             <Route path="/form2" element={<FormPage2 />} />
+            <Route path="/confirmation" element={<ConfirmationPage />} />
           </Route>
         </Routes>
       </ChakraProvider>

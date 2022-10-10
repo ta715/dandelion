@@ -24,7 +24,7 @@ const Form1: React.FC = () => {
       >
         1. 写真
       </Heading>
-      {/* <Input type="image"></Input> */}
+      <Input type="file" border="none"></Input>
       <Heading
         fontSize="18px"
         m="5px"
