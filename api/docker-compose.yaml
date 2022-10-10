@@ -17,3 +17,12 @@ services:
       test: mysqladmin ping -h 127.0.0.1 -u root -pパスワード
     ports:
       - "3306:3306"
+
+  doc:
+    image: swaggerapi/swagger-ui
+    volumes:
+      - ./doc/api/swagger.yaml:/usr/share/nginx/html/api.yaml
+    environment:
+      API_URL: api.yaml
+    ports:
+      - '8081:8080'

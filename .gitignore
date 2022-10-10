@@ -2,6 +2,7 @@
 
 .idea/
 api/bin/
+api/data/*
 # dependencies
 /node_modules
 /.pnp
