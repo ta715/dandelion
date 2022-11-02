@@ -52,7 +52,7 @@ func (mh *ModelHandler) GetDandelionByID(ctx context.Context, id string) (*Dande
 func (mh *ModelHandler) ListDandelion(ctx context.Context) ([]*Dandelion, error) {
 	var dandelions []*Dandelion
 	err := mh.db.SelectContext(ctx, &dandelions, `
-		SELECT id, image, landmark FROM dandelions`)
+		SELECT id, image, statement, landmark, type, is_native, impression FROM dandelions`)
 
 	if err == sql.ErrNoRows {
 		log.Println("Data not found.")

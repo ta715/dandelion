@@ -1,10 +1,14 @@
 package main
 
 import (
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/ta715/dande-api/internal/controllers/handlers"
 	"github.com/ta715/dande-api/internal/controllers/routes"
+	"github.com/ta715/dande-api/internal/models"
+	"log"
 )
 
 // @title Uta API
@@ -19,15 +23,17 @@ func main() {
 	e := echo.New()
 
 	e.Use(middleware.CORS())
+	db, err := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/dandes?parseTime=true")
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	api := e.Group("")
 
-	dandelionController := handlers.NewDandelionHandler()
-	routes.NewRoutes(api, dandelionController)
+	modelHandler := models.NewModelHandler(db)
+	dandelionController := handlers.NewDandelionHandler(modelHandler)
+	userController := handlers.NewUserHandler(modelHandler)
+	routes.NewRoutes(api, dandelionController, userController)
 	e.Logger.Fatal(e.Start(":8080"))
 
-	//db, err := sqlx.Connect("mysql", "root:test@tcp(db:3306)/app?parseTime=true")
-	//if err != nil {
-	//	log.Fatalln(err)
-	//}
 }

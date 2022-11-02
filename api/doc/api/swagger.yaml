@@ -4,6 +4,20 @@ definitions:
     properties:
       id:
         type: string
+      image:
+        items:
+          type: integer
+        type: array
+      impression:
+        type: string
+      is_native:
+        type: boolean
+      landmark:
+        type: string
+      statement:
+        type: string
+      type:
+        type: string
     type: object
 host: localhost:8080
 info:
@@ -15,6 +29,72 @@ info:
   title: Uta API
   version: "1.0"
 paths:
+  /auth/login:
+    post:
+      consumes:
+      - text/plain
+      parameters:
+      - description: メールアドレス
+        in: body
+        name: email
+        required: true
+        schema:
+          type: string
+      - description: パスワード
+        in: body
+        name: password
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+      summary: ログイン
+      tags:
+      - Users
+  /auth/signup:
+    post:
+      parameters:
+      - description: 苗字
+        in: query
+        name: last_name
+        required: true
+        type: string
+      - description: 名前
+        in: query
+        name: first_name
+        required: true
+        type: string
+      - description: 住所
+        in: query
+        name: address
+        required: true
+        type: string
+      - description: 電話
+        in: query
+        name: phone_number
+        required: true
+        type: string
+      - description: メールアドレス
+        in: query
+        name: email
+        required: true
+        type: string
+      - description: パスワード
+        in: query
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+      summary: アカウント登録
+      tags:
+      - Users
   /dandelions:
     get:
       consumes:

@@ -12,10 +12,56 @@ type UserHandler struct {
 	models *models.ModelHandler
 }
 
-func NewUserHandler() *UserHandler {
-	return &UserHandler{}
+func NewUserHandler(models *models.ModelHandler) *UserHandler {
+	return &UserHandler{models: models}
 }
 
+// SignUp はアカウント登録するためのHTTPのエンドポイントです。
+// @Summary アカウント登録
+// @Tags    Users
+// @Produce json
+// @Param   last_name    query string true "苗字"
+// @Param   first_name   query string true "名前"
+// @Param   address      query string true "住所"
+// @Param   phone_number query string true "電話"
+// @Param   email        query string true "メールアドレス"
+// @Param   password     query string true "パスワード"
+// @Success 201
+// @Router  /auth/signup [post]
+func (uh *UserHandler) SignUp() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		lastName := c.FormValue("last_name")
+		firstName := c.FormValue("first_name")
+		address := c.FormValue("address")
+		phoneNumber := c.FormValue("phone_number")
+		email := c.FormValue("email")
+		password := c.FormValue("password")
+		_, err := uh.models.CreateUserByEmail(
+			c.Request().Context(),
+			lastName,
+			firstName,
+			address,
+			phoneNumber,
+			email,
+			password,
+		)
+		if err != nil {
+			return c.NoContent(http.StatusInternalServerError)
+		}
+
+		return c.NoContent(http.StatusCreated)
+	}
+}
+
+// SignIn はログインするためのHTTPのエンドポイントです。
+// @Summary ログイン
+// @Tags    Users
+// @Accept  text/plain
+// @Produce json
+// @Param   email        query string true "メールアドレス"
+// @Param   password     query string true "パスワード"
+// @Success 201
+// @Router  /auth/login [post]
 func (uh *UserHandler) SignIn() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		email := c.FormValue("email")
