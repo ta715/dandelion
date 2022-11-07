@@ -43,7 +43,13 @@ const Form: React.FC = () => {
       navigator.geolocation.getCurrentPosition((position) => {
           setLat(`${position.coords.latitude}`)
           setLng(`${position.coords.longitude}`)
-          const res = DandelionAPI.dandelionsPost(image!, statement, lat, lng, landmark, type, impression);
+          const res = DandelionAPI.dandelionsPost(image!, statement, lat, lng, landmark, type, impression).then(() => {
+              alert("データの投稿が完了しました")
+              navigate("/")
+          }).catch((e) => {
+              alert(`ERROR: HTTP ERROR due to; ${e}`)
+              navigate("/")
+          })
       }, (error) => {
           alert("現在位置情報の取得ができません。環境設定を確認してください。")
       })
