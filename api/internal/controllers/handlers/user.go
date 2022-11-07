@@ -18,7 +18,7 @@ func NewUserHandler(models *models.ModelHandler) *UserHandler {
 // SignUp はアカウント登録するためのHTTPのエンドポイントです。
 // @Summary アカウント登録
 // @Tags    Users
-// @Header  application/x-www-form-urlencoded
+// @Accept  multipart/form-data
 // @Produce json
 // @Param   last_name    formData string true "苗字"
 // @Param   first_name   formData string true "名前"
@@ -56,7 +56,7 @@ func (uh *UserHandler) SignUp() echo.HandlerFunc {
 // SignIn はログインするためのHTTPのエンドポイントです。
 // @Summary ログイン
 // @Tags    Users
-// @Accept  text/plain
+// @Accept  multipart/form-data
 // @Produce json
 // @Param   email    formData string true "メールアドレス"
 // @Param   password formData string true "パスワード"

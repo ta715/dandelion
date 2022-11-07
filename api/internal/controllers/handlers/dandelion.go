@@ -42,7 +42,7 @@ func (dh *DandelionHandler) List() echo.HandlerFunc {
 // @Summary     タンポポ単体取得
 // @Description タンポポの単体を取得する。
 // @Tags        Dandelions
-// @Param       id  path     string true "Dandelion ID"
+// @Param       id path string true "Dandelion ID"
 // @Accept      json
 // @Produce     json
 // @Success     200 {object} presenter.Dandelion
@@ -62,14 +62,14 @@ func (dh *DandelionHandler) GetByID() echo.HandlerFunc {
 // @Summary     タンポポ登録
 // @Description タンポポを登録する。
 // @Tags        Dandelions
-// @Param   image    query string true "写真"
-// @Param   statement    query string true "特徴"
-// @Param   lat query string true "緯度"
-// @Param   lng    query string true "経度"
-// @Param   landmark query string true "目印"
-// @Param   type    query string true "場所"
-// @Param   impression query string true "感想"
-// @Accept      json
+// @Param       image      formData file   true "写真"
+// @Param       statement  formData string true "特徴"
+// @Param       lat        formData string true "緯度"
+// @Param       lng        formData string true "経度"
+// @Param       landmark   formData string true "目印"
+// @Param       type       formData string true "場所"
+// @Param       impression formData string true "感想"
+// @Accept      multipart/form-data
 // @Produce     json
 // @Success     201
 // @Failure     401
