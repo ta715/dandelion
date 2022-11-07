@@ -35,22 +35,22 @@ paths:
       - text/plain
       parameters:
       - description: メールアドレス
-        in: body
+        in: formData
         name: email
         required: true
-        schema:
-          type: string
+        type: string
       - description: パスワード
-        in: body
+        in: formData
         name: password
         required: true
-        schema:
-          type: string
+        type: string
       produces:
       - application/json
       responses:
         "201":
           description: Created
+        "401":
+          description: Unauthorized
       summary: ログイン
       tags:
       - Users
@@ -58,32 +58,32 @@ paths:
     post:
       parameters:
       - description: 苗字
-        in: query
+        in: formData
         name: last_name
         required: true
         type: string
       - description: 名前
-        in: query
+        in: formData
         name: first_name
         required: true
         type: string
       - description: 住所
-        in: query
+        in: formData
         name: address
         required: true
         type: string
       - description: 電話
-        in: query
+        in: formData
         name: phone_number
         required: true
         type: string
       - description: メールアドレス
-        in: query
+        in: formData
         name: email
         required: true
         type: string
       - description: パスワード
-        in: query
+        in: formData
         name: password
         required: true
         type: string
@@ -112,4 +112,89 @@ paths:
       summary: タンポポ一覧取得
       tags:
       - Dandelions
+    post:
+      consumes:
+      - application/json
+      description: タンポポを登録する。
+      parameters:
+      - description: 写真
+        in: query
+        name: image
+        required: true
+        type: string
+      - description: 特徴
+        in: query
+        name: statement
+        required: true
+        type: string
+      - description: 緯度
+        in: query
+        name: lat
+        required: true
+        type: string
+      - description: 経度
+        in: query
+        name: lng
+        required: true
+        type: string
+      - description: 目印
+        in: query
+        name: landmark
+        required: true
+        type: string
+      - description: 場所
+        in: query
+        name: type
+        required: true
+        type: string
+      - description: 感想
+        in: query
+        name: impression
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+      summary: タンポポ登録
+      tags:
+      - Dandelions
+  /dandelions/{id}:
+    get:
+      consumes:
+      - application/json
+      description: タンポポの単体を取得する。
+      parameters:
+      - description: Dandelion ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.Dandelion'
+      summary: タンポポ単体取得
+      tags:
+      - Dandelions
+  /me:
+    get:
+      consumes:
+      - text/plain
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+      summary: プロフィール取得
+      tags:
+      - Users
 swagger: "2.0"

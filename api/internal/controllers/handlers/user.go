@@ -1,9 +1,8 @@
 package handlers
 
 import (
-	"github.com/gorilla/sessions"
-	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
+	"github.com/ta715/dande-api/internal/controllers/middleware"
 	"github.com/ta715/dande-api/internal/models"
 	"net/http"
 )
@@ -19,13 +18,14 @@ func NewUserHandler(models *models.ModelHandler) *UserHandler {
 // SignUp はアカウント登録するためのHTTPのエンドポイントです。
 // @Summary アカウント登録
 // @Tags    Users
+// @Header  application/x-www-form-urlencoded
 // @Produce json
-// @Param   last_name    query string true "苗字"
-// @Param   first_name   query string true "名前"
-// @Param   address      query string true "住所"
-// @Param   phone_number query string true "電話"
-// @Param   email        query string true "メールアドレス"
-// @Param   password     query string true "パスワード"
+// @Param   last_name    formData string true "苗字"
+// @Param   first_name   formData string true "名前"
+// @Param   address      formData string true "住所"
+// @Param   phone_number formData string true "電話"
+// @Param   email        formData string true "メールアドレス"
+// @Param   password     formData string true "パスワード"
 // @Success 201
 // @Router  /auth/signup [post]
 func (uh *UserHandler) SignUp() echo.HandlerFunc {
@@ -58,9 +58,10 @@ func (uh *UserHandler) SignUp() echo.HandlerFunc {
 // @Tags    Users
 // @Accept  text/plain
 // @Produce json
-// @Param   email        query string true "メールアドレス"
-// @Param   password     query string true "パスワード"
+// @Param   email    formData string true "メールアドレス"
+// @Param   password formData string true "パスワード"
 // @Success 201
+// @Failure 401
 // @Router  /auth/login [post]
 func (uh *UserHandler) SignIn() echo.HandlerFunc {
 	return func(c echo.Context) error {
@@ -80,15 +81,23 @@ func (uh *UserHandler) SignIn() echo.HandlerFunc {
 			return c.NoContent(http.StatusUnauthorized)
 		}
 
-		sess, _ := session.Get("sessionId", c)
-		sess.Options = &sessions.Options{
-			Path:     "/",
-			MaxAge:   86400 * 7,
-			HttpOnly: true,
-		}
-		sess.Values["user_id"] = "userid"
-		sess.Save(c.Request(), c.Response())
+		middleware.SetUserIDSession(c.Response(), c.Request(), user.ID)
 
 		return c.NoContent(http.StatusOK)
+	}
+}
+
+// Me はログインするためのHTTPのエンドポイントです。
+// @Summary プロフィール取得
+// @Tags    Users
+// @Accept  text/plain
+// @Produce json
+// @Success 200
+// @Failure 401
+// @Router  /me [get]
+func (uh *UserHandler) Me() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		userID := c.Get("user_id")
+		return c.String(http.StatusOK, userID.(string))
 	}
 }

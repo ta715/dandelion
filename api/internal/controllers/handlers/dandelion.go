@@ -3,7 +3,6 @@ package handlers
 import (
 	"errors"
 	"fmt"
-	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 	"github.com/ta715/dande-api/internal/controllers/presenter"
 	"github.com/ta715/dande-api/internal/models"
@@ -39,6 +38,15 @@ func (dh *DandelionHandler) List() echo.HandlerFunc {
 	}
 }
 
+// GetByID		タンポポ単体の取得
+// @Summary     タンポポ単体取得
+// @Description タンポポの単体を取得する。
+// @Tags        Dandelions
+// @Param       id  path     string true "Dandelion ID"
+// @Accept      json
+// @Produce     json
+// @Success     200 {object} presenter.Dandelion
+// @Router      /dandelions/{id} [get]
 func (dh *DandelionHandler) GetByID() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		id := c.Param("id")
@@ -50,12 +58,25 @@ func (dh *DandelionHandler) GetByID() echo.HandlerFunc {
 	}
 }
 
+// Create		タンポポの登録
+// @Summary     タンポポ登録
+// @Description タンポポを登録する。
+// @Tags        Dandelions
+// @Param   image    query string true "写真"
+// @Param   statement    query string true "特徴"
+// @Param   lat query string true "緯度"
+// @Param   lng    query string true "経度"
+// @Param   landmark query string true "目印"
+// @Param   type    query string true "場所"
+// @Param   impression query string true "感想"
+// @Accept      json
+// @Produce     json
+// @Success     201
+// @Failure     401
+// @Router      /dandelions [post]
 func (dh *DandelionHandler) Create() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		sess, _ := session.Get("session", c)
-		if sess.Values["user_id"] == "" {
-			return c.NoContent(http.StatusUnauthorized)
-		}
+		userID := c.Get("user_id")
 		//-----------
 		// Read file
 		//-----------
@@ -94,7 +115,6 @@ func (dh *DandelionHandler) Create() echo.HandlerFunc {
 		landmark := c.FormValue("landmark")
 		placeType := c.FormValue("placeType")
 		impression := c.FormValue("impression")
-		userID := sess.Values["user_id"]
 
 		// FormValue書く
 		err = dh.models.CreateDandelion(

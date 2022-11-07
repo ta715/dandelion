@@ -9,6 +9,7 @@ import (
 	"github.com/ta715/dande-api/internal/controllers/routes"
 	"github.com/ta715/dande-api/internal/models"
 	"log"
+	"net/http"
 )
 
 // @title Uta API
@@ -22,7 +23,11 @@ import (
 func main() {
 	e := echo.New()
 
-	e.Use(middleware.CORS())
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowMethods:     []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
+		AllowCredentials: true,
+	}))
 	db, err := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/dandes?parseTime=true")
 	if err != nil {
 		log.Fatalln(err)
