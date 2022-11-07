@@ -30,12 +30,6 @@ const Form: React.FC = () => {
   const handleChangeStatement = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setStatement(e.target.value);
   };
-  const handleChangeLat = (e: ChangeEvent<HTMLInputElement>) => {
-    setLat(e.target.value);
-  };
-  const handleChangeLng = (e: ChangeEvent<HTMLInputElement>) => {
-    setLng(e.target.value);
-  };
   const handleChangeLandmark = (e: ChangeEvent<HTMLInputElement>) => {
     setLandmark(e.target.value);
   };
@@ -46,7 +40,13 @@ const Form: React.FC = () => {
     setImpression(e.target.value);
   };
   const handleImput = () => {
-    const res = DandelionAPI.dandelionsPost();
+      navigator.geolocation.getCurrentPosition((position) => {
+          setLat(`${position.coords.latitude}`)
+          setLng(`${position.coords.longitude}`)
+          const res = DandelionAPI.dandelionsPost(image!, statement, lat, lng, landmark, type, impression);
+      }, (error) => {
+          alert("現在位置情報の取得ができません。環境設定を確認してください。")
+      })
   };
 
   return (
@@ -100,46 +100,6 @@ const Form: React.FC = () => {
         h="25px"
         backgroundColor="white"
         onChange={handleChangeLandmark}
-      ></Input>
-      <Heading
-        fontSize="14px"
-        m="5px"
-        py="10px"
-        w="full"
-        textAlign="left"
-        color="green.800"
-      >
-        3-2. 緯度・経度
-      </Heading>
-      <Heading
-        fontSize="12px"
-        m="5px"
-        pt="10px"
-        w="full"
-        textAlign="left"
-        color="green.800"
-      >
-        北緯
-      </Heading>
-      <Input
-        h="25px"
-        backgroundColor="white"
-        onChange={handleChangeLat}
-      ></Input>
-      <Heading
-        fontSize="12px"
-        m="5px"
-        pt="10px"
-        w="full"
-        textAlign="left"
-        color="green.800"
-      >
-        東経
-      </Heading>
-      <Input
-        h="25px"
-        backgroundColor="white"
-        onChange={handleChangeLng}
       ></Input>
       <Heading
         fontSize="14px"
