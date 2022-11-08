@@ -7,6 +7,7 @@ import (
 	"github.com/ta715/dande-api/internal/controllers/presenter"
 	"github.com/ta715/dande-api/internal/models"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -82,12 +83,14 @@ func (dh *DandelionHandler) Create() echo.HandlerFunc {
 		//-----------
 
 		// Source
-		file, err := c.FormFile("file")
+		file, err := c.FormFile("image")
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 		src, err := file.Open()
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 		defer src.Close()
@@ -95,11 +98,13 @@ func (dh *DandelionHandler) Create() echo.HandlerFunc {
 		// Destination
 		dst, err := os.Create(file.Filename)
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 
 		// Copy
 		if _, err = io.Copy(dst, src); err != nil {
+			log.Println(err)
 			return err
 		}
 
@@ -110,6 +115,7 @@ func (dh *DandelionHandler) Create() echo.HandlerFunc {
 		lat, err := strconv.ParseFloat(c.FormValue("lat"), 64)
 		lng, err := strconv.ParseFloat(c.FormValue("lng"), 64)
 		if err != nil {
+			log.Println(err)
 			return c.NoContent(http.StatusBadRequest)
 		}
 		landmark := c.FormValue("landmark")
@@ -132,6 +138,7 @@ func (dh *DandelionHandler) Create() echo.HandlerFunc {
 			return c.NoContent(http.StatusBadRequest)
 		}
 		if err != nil {
+			log.Println(err)
 			return c.NoContent(http.StatusInternalServerError)
 		}
 
