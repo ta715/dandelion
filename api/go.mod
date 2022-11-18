@@ -5,10 +5,11 @@ go 1.19
 require (
 	github.com/Clarifai/clarifai-go-grpc v0.0.0-20220926140904-e5d70edb99a6
 	github.com/Songmu/make2help v0.2.1
+	github.com/go-sql-driver/mysql v1.6.0
 	github.com/golangci/golangci-lint v1.50.0
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/sessions v1.2.1
-	github.com/labstack/echo-contrib v0.13.0
+	github.com/jmoiron/sqlx v1.2.0
 	github.com/labstack/echo/v4 v4.9.1
 	github.com/pressly/goose/v3 v3.7.0
 	github.com/swaggo/swag v1.8.6
@@ -61,7 +62,6 @@ require (
 	github.com/go-openapi/jsonreference v0.20.0 // indirect
 	github.com/go-openapi/spec v0.20.7 // indirect
 	github.com/go-openapi/swag v0.22.3 // indirect
-	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/go-toolsmith/astcast v1.0.0 // indirect
 	github.com/go-toolsmith/astcopy v1.0.2 // indirect
 	github.com/go-toolsmith/astequal v1.0.3 // indirect
@@ -87,7 +87,6 @@ require (
 	github.com/golangci/unconvert v0.0.0-20180507085042-28b1c447d1f4 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/gordonklaus/ineffassign v0.0.0-20210914165742-4cc7213b9bc8 // indirect
-	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/securecookie v1.1.1 // indirect
 	github.com/gostaticanalysis/analysisutil v0.7.1 // indirect
 	github.com/gostaticanalysis/comment v1.4.2 // indirect
