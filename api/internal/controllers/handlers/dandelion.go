@@ -2,14 +2,12 @@ package handlers
 
 import (
 	"errors"
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/ta715/dande-api/internal/controllers/presenter"
 	"github.com/ta715/dande-api/internal/models"
 	"io"
 	"log"
 	"net/http"
-	"os"
 	"strconv"
 )
 
@@ -94,22 +92,8 @@ func (dh *DandelionHandler) Create() echo.HandlerFunc {
 			return err
 		}
 		defer src.Close()
-
-		// Destination
-		dst, err := os.Create(file.Filename)
-		if err != nil {
-			log.Println(err)
-			return err
-		}
-
-		// Copy
-		if _, err = io.Copy(dst, src); err != nil {
-			log.Println(err)
-			return err
-		}
-
-		// 画像をBase64形式に変換
-		base64 := FileToBase64(dst)
+    
+		base64, err := io.ReadAll(src)
 
 		statement := c.FormValue("statement")
 		lat, err := strconv.ParseFloat(c.FormValue("lat"), 64)
@@ -119,7 +103,7 @@ func (dh *DandelionHandler) Create() echo.HandlerFunc {
 			return c.NoContent(http.StatusBadRequest)
 		}
 		landmark := c.FormValue("landmark")
-		placeType := c.FormValue("placeType")
+		placeType := c.FormValue("type")
 		impression := c.FormValue("impression")
 
 		// FormValue書く
@@ -135,6 +119,7 @@ func (dh *DandelionHandler) Create() echo.HandlerFunc {
 			impression,
 		)
 		if errors.Is(models.NotFound, err) {
+			log.Println(err)
 			return c.NoContent(http.StatusBadRequest)
 		}
 		if err != nil {
@@ -144,20 +129,4 @@ func (dh *DandelionHandler) Create() echo.HandlerFunc {
 
 		return c.NoContent(http.StatusCreated)
 	}
-}
-
-func FileToBase64(file *os.File) []byte {
-	// https://qiita.com/tchnkmr/items/b686adc4a7e144d48755
-	buf := make([]byte, 64)
-	for {
-		n, err := file.Read(buf)
-		if n == 0 {
-			break
-		}
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(string(buf))
-	}
-	return buf
 }

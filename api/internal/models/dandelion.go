@@ -12,8 +12,8 @@ import (
 	"log"
 )
 
-var API_KEY = ""
-var MODEL_ID = ""
+var API_KEY = "5763e8d6c603414f9d8feb530110caa5"
+var MODEL_ID = "fe-dandelion"
 
 // Dandelion タンポポのエンティティ
 type Dandelion struct {

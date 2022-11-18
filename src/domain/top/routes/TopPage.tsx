@@ -29,7 +29,7 @@ const TopPage: React.FC = () => {
             backgroundColor="green.100"
             color="green.800"
             boxShadow="md"
-            onClick={() => navigate("/form1")}
+            onClick={() => navigate("/form")}
           >
             タンポポを登録する
           </Button>

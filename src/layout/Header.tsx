@@ -46,7 +46,7 @@ const Header: React.FC = () => {
               <MenuItem onClick={() => navigate("/list")}>
                 タンポポ一覧
               </MenuItem>
-              <MenuItem onClick={() => navigate("/form1")}>
+              <MenuItem onClick={() => navigate("/form")}>
                 タンポポ登録
               </MenuItem>
             </MenuList>
