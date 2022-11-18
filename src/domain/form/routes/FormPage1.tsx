@@ -1,15 +1,14 @@
 import React from "react";
-import { Box, Button, Flex, Icon } from "@chakra-ui/react";
-import { ChevronLeftIcon } from "@chakra-ui/icons";
+import { Box, Button, Flex } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import Confirmation from "../componets/Confirmation";
+import Form1 from "../componets/Form1";
 
-const ConfirmationPage: React.FC = () => {
+const FormPage1: React.FC = () => {
   const navigate = useNavigate();
   return (
     <Flex minH="100px" display="flex" justify="center" align="center">
-      <Box maxW="300px" m="30px">
-        <Confirmation />
+      <Box maxW="300px" m="5px">
+        <Form1 />
         <Box maxW="300px">
           <Button
             h="43px"
@@ -19,9 +18,9 @@ const ConfirmationPage: React.FC = () => {
             backgroundColor="green.100"
             color="green.800"
             boxShadow="md"
-            onClick={() => navigate("/list")}
+            onClick={() => navigate("/form2")}
           >
-            登録
+            次へ
           </Button>
         </Box>
       </Box>
@@ -29,4 +28,4 @@ const ConfirmationPage: React.FC = () => {
   );
 };
 
-export default ConfirmationPage;
+export default FormPage1;

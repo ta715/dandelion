@@ -48,8 +48,6 @@ func (mh *ModelHandler) CreateUserByEmail(ctx context.Context, lastName string, 
 		Password:    "",
 	}
 
-	log.Println(user)
-
 	hashedPassword, err := HashPassword(password)
 	if err != nil {
 		return nil, err
