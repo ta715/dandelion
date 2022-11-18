@@ -92,6 +92,7 @@ func (dh *DandelionHandler) Create() echo.HandlerFunc {
 			return err
 		}
 		defer src.Close()
+    
 		base64, err := io.ReadAll(src)
 
 		statement := c.FormValue("statement")

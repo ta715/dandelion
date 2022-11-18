@@ -15,8 +15,8 @@ const Form: React.FC = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState<File | null>(null);
   const [statement, setStatement] = useState("");
-  const [lat, setLat] = useState("123");
-  const [lng, setLng] = useState("456");
+  const [lat, setLat] = useState("");
+  const [lng, setLng] = useState("");
   const [landmark, setLandmark] = useState("");
   const [placeType, setType] = useState("");
   const [impression, setImpression] = useState("");
@@ -49,10 +49,8 @@ const Form: React.FC = () => {
   const handleImput = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        // setLat(`${position.coords.latitude}`);
-        // setLng(`${position.coords.longitude}`);
-        // setLat("123");
-        // setLng("456");
+        setLat(`${position.coords.latitude}`);
+        setLng(`${position.coords.longitude}`);
         console.log(lat, lng);
         const res = DandelionAPI.dandelionsPost(
           image!,
@@ -60,7 +58,7 @@ const Form: React.FC = () => {
           lat,
           lng,
           landmark,
-          "林",
+          placeType,
           impression
         )
           .then(() => {
@@ -193,7 +191,7 @@ const Form: React.FC = () => {
           boxShadow="md"
           onClick={handleImput}
         >
-          確認画面へ
+          登録
         </Button>
       </Box>
     </Box>
