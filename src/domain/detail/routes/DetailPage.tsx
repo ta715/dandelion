@@ -1,15 +1,36 @@
 import React from "react";
-import { Box, Button, Flex, Icon } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon, Spinner } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDandelionAPI } from "../../../api/Dandelion";
 import Detail from "../components/Detail";
+import { ListCardProps } from "../../list/components/ListCard";
 
-const DetailPage: React.FC = () => {
+const DetailPage = () => {
+  const params = useParams();
   const navigate = useNavigate();
+  const dandelionQuery = useDandelionAPI(params.dandelionId!);
+
+  if (dandelionQuery.isLoading) {
+    return <Spinner />;
+  }
+
+  if (!dandelionQuery?.data) {
+    return <p>error</p>;
+  }
+
   return (
     <Flex minH="100px" display="flex" justify="center" align="center">
       <Box maxW="300px" m="30px">
-        <Detail />
+        <Detail
+          id={dandelionQuery.data.data.id!}
+          image={dandelionQuery.data.data.image!}
+          isNative={dandelionQuery.data.data.is_native!}
+          statement={dandelionQuery.data.data.statement!}
+          landmark={dandelionQuery.data.data.landmark!}
+          placeType={dandelionQuery.data.data.type!}
+          impression={dandelionQuery.data.data.impression!}
+        />
         <Box maxW="300px">
           <Button
             h="35px"
