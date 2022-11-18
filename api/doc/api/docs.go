@@ -23,7 +23,7 @@ const docTemplate = `{
         "/auth/login": {
             "post": {
                 "consumes": [
-                    "text/plain"
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
@@ -60,6 +60,9 @@ const docTemplate = `{
         },
         "/auth/signup": {
             "post": {
+                "consumes": [
+                    "multipart/form-data"
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -146,7 +149,7 @@ const docTemplate = `{
             "post": {
                 "description": "タンポポを登録する。",
                 "consumes": [
-                    "application/json"
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
@@ -157,52 +160,52 @@ const docTemplate = `{
                 "summary": "タンポポ登録",
                 "parameters": [
                     {
-                        "type": "string",
+                        "type": "file",
                         "description": "写真",
                         "name": "image",
-                        "in": "query",
+                        "in": "formData",
                         "required": true
                     },
                     {
                         "type": "string",
                         "description": "特徴",
                         "name": "statement",
-                        "in": "query",
+                        "in": "formData",
                         "required": true
                     },
                     {
                         "type": "string",
                         "description": "緯度",
                         "name": "lat",
-                        "in": "query",
+                        "in": "formData",
                         "required": true
                     },
                     {
                         "type": "string",
                         "description": "経度",
                         "name": "lng",
-                        "in": "query",
+                        "in": "formData",
                         "required": true
                     },
                     {
                         "type": "string",
                         "description": "目印",
                         "name": "landmark",
-                        "in": "query",
+                        "in": "formData",
                         "required": true
                     },
                     {
                         "type": "string",
                         "description": "場所",
                         "name": "type",
-                        "in": "query",
+                        "in": "formData",
                         "required": true
                     },
                     {
                         "type": "string",
                         "description": "感想",
                         "name": "impression",
-                        "in": "query",
+                        "in": "formData",
                         "required": true
                     }
                 ],

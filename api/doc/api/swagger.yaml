@@ -32,7 +32,7 @@ paths:
   /auth/login:
     post:
       consumes:
-      - text/plain
+      - multipart/form-data
       parameters:
       - description: メールアドレス
         in: formData
@@ -56,6 +56,8 @@ paths:
       - Users
   /auth/signup:
     post:
+      consumes:
+      - multipart/form-data
       parameters:
       - description: 苗字
         in: formData
@@ -114,41 +116,41 @@ paths:
       - Dandelions
     post:
       consumes:
-      - application/json
+      - multipart/form-data
       description: タンポポを登録する。
       parameters:
       - description: 写真
-        in: query
+        in: formData
         name: image
         required: true
-        type: string
+        type: file
       - description: 特徴
-        in: query
+        in: formData
         name: statement
         required: true
         type: string
       - description: 緯度
-        in: query
+        in: formData
         name: lat
         required: true
         type: string
       - description: 経度
-        in: query
+        in: formData
         name: lng
         required: true
         type: string
       - description: 目印
-        in: query
+        in: formData
         name: landmark
         required: true
         type: string
       - description: 場所
-        in: query
+        in: formData
         name: type
         required: true
         type: string
       - description: 感想
-        in: query
+        in: formData
         name: impression
         required: true
         type: string

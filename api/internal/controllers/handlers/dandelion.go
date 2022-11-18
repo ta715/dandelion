@@ -7,6 +7,7 @@ import (
 	"github.com/ta715/dande-api/internal/controllers/presenter"
 	"github.com/ta715/dande-api/internal/models"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -42,7 +43,7 @@ func (dh *DandelionHandler) List() echo.HandlerFunc {
 // @Summary     タンポポ単体取得
 // @Description タンポポの単体を取得する。
 // @Tags        Dandelions
-// @Param       id  path     string true "Dandelion ID"
+// @Param       id path string true "Dandelion ID"
 // @Accept      json
 // @Produce     json
 // @Success     200 {object} presenter.Dandelion
@@ -62,14 +63,14 @@ func (dh *DandelionHandler) GetByID() echo.HandlerFunc {
 // @Summary     タンポポ登録
 // @Description タンポポを登録する。
 // @Tags        Dandelions
-// @Param   image    query string true "写真"
-// @Param   statement    query string true "特徴"
-// @Param   lat query string true "緯度"
-// @Param   lng    query string true "経度"
-// @Param   landmark query string true "目印"
-// @Param   type    query string true "場所"
-// @Param   impression query string true "感想"
-// @Accept      json
+// @Param       image      formData file   true "写真"
+// @Param       statement  formData string true "特徴"
+// @Param       lat        formData string true "緯度"
+// @Param       lng        formData string true "経度"
+// @Param       landmark   formData string true "目印"
+// @Param       type       formData string true "場所"
+// @Param       impression formData string true "感想"
+// @Accept      multipart/form-data
 // @Produce     json
 // @Success     201
 // @Failure     401
@@ -82,12 +83,14 @@ func (dh *DandelionHandler) Create() echo.HandlerFunc {
 		//-----------
 
 		// Source
-		file, err := c.FormFile("file")
+		file, err := c.FormFile("image")
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 		src, err := file.Open()
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 		defer src.Close()
@@ -95,11 +98,13 @@ func (dh *DandelionHandler) Create() echo.HandlerFunc {
 		// Destination
 		dst, err := os.Create(file.Filename)
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 
 		// Copy
 		if _, err = io.Copy(dst, src); err != nil {
+			log.Println(err)
 			return err
 		}
 
@@ -110,6 +115,7 @@ func (dh *DandelionHandler) Create() echo.HandlerFunc {
 		lat, err := strconv.ParseFloat(c.FormValue("lat"), 64)
 		lng, err := strconv.ParseFloat(c.FormValue("lng"), 64)
 		if err != nil {
+			log.Println(err)
 			return c.NoContent(http.StatusBadRequest)
 		}
 		landmark := c.FormValue("landmark")
@@ -132,6 +138,7 @@ func (dh *DandelionHandler) Create() echo.HandlerFunc {
 			return c.NoContent(http.StatusBadRequest)
 		}
 		if err != nil {
+			log.Println(err)
 			return c.NoContent(http.StatusInternalServerError)
 		}
 

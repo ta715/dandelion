@@ -144,10 +144,31 @@ export const DandelionsApiAxiosParamCreator = function (configuration?: Configur
         /**
          * タンポポを登録する。
          * @summary タンポポ登録
+         * @param {File} image 写真
+         * @param {string} statement 特徴
+         * @param {string} lat 緯度
+         * @param {string} lng 経度
+         * @param {string} landmark 目印
+         * @param {string} type 場所
+         * @param {string} impression 感想
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dandelionsPost: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        dandelionsPost: async (image: File, statement: string, lat: string, lng: string, landmark: string, type: string, impression: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'image' is not null or undefined
+            assertParamExists('dandelionsPost', 'image', image)
+            // verify required parameter 'statement' is not null or undefined
+            assertParamExists('dandelionsPost', 'statement', statement)
+            // verify required parameter 'lat' is not null or undefined
+            assertParamExists('dandelionsPost', 'lat', lat)
+            // verify required parameter 'lng' is not null or undefined
+            assertParamExists('dandelionsPost', 'lng', lng)
+            // verify required parameter 'landmark' is not null or undefined
+            assertParamExists('dandelionsPost', 'landmark', landmark)
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('dandelionsPost', 'type', type)
+            // verify required parameter 'impression' is not null or undefined
+            assertParamExists('dandelionsPost', 'impression', impression)
             const localVarPath = `/dandelions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -159,12 +180,44 @@ export const DandelionsApiAxiosParamCreator = function (configuration?: Configur
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
 
+            if (image !== undefined) { 
+                localVarFormParams.append('image', image as any);
+            }
+    
+            if (statement !== undefined) { 
+                localVarFormParams.append('statement', statement as any);
+            }
+    
+            if (lat !== undefined) { 
+                localVarFormParams.append('lat', lat as any);
+            }
+    
+            if (lng !== undefined) { 
+                localVarFormParams.append('lng', lng as any);
+            }
+    
+            if (landmark !== undefined) { 
+                localVarFormParams.append('landmark', landmark as any);
+            }
+    
+            if (type !== undefined) { 
+                localVarFormParams.append('type', type as any);
+            }
+    
+            if (impression !== undefined) { 
+                localVarFormParams.append('impression', impression as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -205,11 +258,18 @@ export const DandelionsApiFp = function(configuration?: Configuration) {
         /**
          * タンポポを登録する。
          * @summary タンポポ登録
+         * @param {File} image 写真
+         * @param {string} statement 特徴
+         * @param {string} lat 緯度
+         * @param {string} lng 経度
+         * @param {string} landmark 目印
+         * @param {string} type 場所
+         * @param {string} impression 感想
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async dandelionsPost(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.dandelionsPost(options);
+        async dandelionsPost(image: File, statement: string, lat: string, lng: string, landmark: string, type: string, impression: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.dandelionsPost(image, statement, lat, lng, landmark, type, impression, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -244,11 +304,18 @@ export const DandelionsApiFactory = function (configuration?: Configuration, bas
         /**
          * タンポポを登録する。
          * @summary タンポポ登録
+         * @param {File} image 写真
+         * @param {string} statement 特徴
+         * @param {string} lat 緯度
+         * @param {string} lng 経度
+         * @param {string} landmark 目印
+         * @param {string} type 場所
+         * @param {string} impression 感想
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dandelionsPost(options?: any): AxiosPromise<void> {
-            return localVarFp.dandelionsPost(options).then((request) => request(axios, basePath));
+        dandelionsPost(image: File, statement: string, lat: string, lng: string, landmark: string, type: string, impression: string, options?: any): AxiosPromise<void> {
+            return localVarFp.dandelionsPost(image, statement, lat, lng, landmark, type, impression, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -286,12 +353,19 @@ export class DandelionsApi extends BaseAPI {
     /**
      * タンポポを登録する。
      * @summary タンポポ登録
+     * @param {File} image 写真
+     * @param {string} statement 特徴
+     * @param {string} lat 緯度
+     * @param {string} lng 経度
+     * @param {string} landmark 目印
+     * @param {string} type 場所
+     * @param {string} impression 感想
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DandelionsApi
      */
-    public dandelionsPost(options?: AxiosRequestConfig) {
-        return DandelionsApiFp(this.configuration).dandelionsPost(options).then((request) => request(this.axios, this.basePath));
+    public dandelionsPost(image: File, statement: string, lat: string, lng: string, landmark: string, type: string, impression: string, options?: AxiosRequestConfig) {
+        return DandelionsApiFp(this.configuration).dandelionsPost(image, statement, lat, lng, landmark, type, impression, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -326,20 +400,24 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
-            if (email !== undefined) {
-                localVarQueryParameter['email'] = email;
+
+            if (email !== undefined) { 
+                localVarFormParams.append('email', email as any);
             }
-
-            if (password !== undefined) {
-                localVarQueryParameter['password'] = password;
+    
+            if (password !== undefined) { 
+                localVarFormParams.append('password', password as any);
             }
-
-
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -382,36 +460,40 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
-            if (lastName !== undefined) {
-                localVarQueryParameter['last_name'] = lastName;
+
+            if (lastName !== undefined) { 
+                localVarFormParams.append('last_name', lastName as any);
             }
-
-            if (firstName !== undefined) {
-                localVarQueryParameter['first_name'] = firstName;
+    
+            if (firstName !== undefined) { 
+                localVarFormParams.append('first_name', firstName as any);
             }
-
-            if (address !== undefined) {
-                localVarQueryParameter['address'] = address;
+    
+            if (address !== undefined) { 
+                localVarFormParams.append('address', address as any);
             }
-
-            if (phoneNumber !== undefined) {
-                localVarQueryParameter['phone_number'] = phoneNumber;
+    
+            if (phoneNumber !== undefined) { 
+                localVarFormParams.append('phone_number', phoneNumber as any);
             }
-
-            if (email !== undefined) {
-                localVarQueryParameter['email'] = email;
+    
+            if (email !== undefined) { 
+                localVarFormParams.append('email', email as any);
             }
-
-            if (password !== undefined) {
-                localVarQueryParameter['password'] = password;
+    
+            if (password !== undefined) { 
+                localVarFormParams.append('password', password as any);
             }
-
-
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),

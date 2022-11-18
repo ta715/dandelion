@@ -1,8 +1,7 @@
 import { axios } from "../lib/axios";
-import { UsersApi, DandelionsApi } from "../types/openapi/api";
-import { Configuration } from "../types/openapi";
+import { DandelionsApi } from "../types/openapi";
 import { useQuery } from "react-query";
-import { ExtractFnReturnType, QueryConfig } from "../lib/react-query";
+import { ExtractFnReturnType } from "../lib/react-query";
 
 export const DandelionAPI = new DandelionsApi(undefined, "", axios);
 
