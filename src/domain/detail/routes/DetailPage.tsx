@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Button, Flex, Icon } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
-import Detail from "../componets/Detail";
+import Detail from "../components/Detail";
 
 const DetailPage: React.FC = () => {
   const navigate = useNavigate();
